@@ -1,55 +1,47 @@
 #include <stdio.h>
+#include <string.h>
 
 #include ".\Aluno\TADAluno.h"
 #include ".\Instituicao\TADProfessor.h"
 
 int main(){
-    Professor professor1;
+    Professor* professor1;
 
     char nome[10];
     int matricula;
     char contrato;
     int idade;
     float salario;
-
-    printf("Digite o nome do professor: ");
-    scanf(" %s", nome);
-    
-    printf("Digite a matricula do professor: ");
-    scanf(" %d", &matricula);
-
-    printf("Digite a modalidade de contratacao do professor (E || C): ");
-    scanf(" %c", &contrato);
-
-    printf("Digite a idade do professor: ");
-    scanf(" %d", &idade);
-
-    printf("Digite o salario do professor: ");
-    scanf(" %f", &salario);
-
-    inicializaProfessor(&professor1, nome, matricula, contrato, idade, salario);
-
-    imprimeProfessor(&professor1);
-
-    Aluno aluno1;
-
     char genero;
 
-    printf("Digite o nome do aluno: ");
-    scanf(" %s", nome);
+    strcpy("ProfTeste", nome);
+    
+    matricula = 1980;
+    contrato = 'C';
+    idade = 30;
+    salario = 1000.0;
 
-    printf("Digite o genero do aluno (F || M): ");
-    scanf(" %c", &genero);
+    professor1 = inicializaProfessor(nome, matricula, contrato, idade, salario);
+    imprimeProfessor(professor1);
 
-    printf("Digite a matricula do aluno: ");
-    scanf(" %d", &matricula);
+    if(!destroiProfessor(professor1)){
+        printf("Erro ao excluir professor");
+    }
 
-    printf("Digite a idade do aluno: ");
-    scanf(" %i", &idade);
+    Aluno* aluno1;
 
-    inicializaAluno(&aluno1, nome, genero, matricula, idade);
+    strcpy("alunTeste", nome);
+    
+    genero = 'M';
+    matricula = 2000;
+    idade = 15;
 
-    imprimeAluno(&aluno1);
+    aluno1 = inicializaAluno(nome, genero, matricula, idade);
+    imprimeAluno(aluno1);
+
+    if(!destroiAluno(aluno1)){
+        printf("Erro ao excluir aluno");
+    }
 
     return 0;
-}
+}//Essa versão do main serve apenas para fins de teste
