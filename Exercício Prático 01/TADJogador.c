@@ -1,39 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "TADJogador.h"
 #include "TADCarta.h"
 
 #define QUANT_CARTAS_INICIAIS 2 //Número inicial de cartas que cada jogador recebe
 
-Jogador inicializaJogador(char nome[]){ //Talvez o endereço de memória sendo o retorno dessa função torne-a
-                                        //menos custosa
-    
-    Jogador jogador;
+void inicializaJogador(Jogador* jogador, char nome[]){
 
-    strcpy(jogador.nome, nome);
-    jogador.score = 0;
+    strcpy(jogador->nome, nome);
+    jogador->score = 0;
 
     for(int i = 0; i < MAX_CARTAS; i++){
-        jogador.maoJogador[i].used = 1;
+        jogador->maoJogador[i]->used = 1;
     }
-
-    return jogador;
 }
 
 void comprarCarta(Jogador* jogador, Carta* carta){
-    for(int i =  0; i < MAX_CARTAS; i++){
-        if(jogador->maoJogador[i].used == 1){
-            
-            jogador->maoJogador[i] = sorteiaCarta(carta);
-            jogador->score = jogador->maoJogador[i].num;
-            jogador->maoJogador[i].used = 0;
+    int comprado = 1;
 
-            return;
+    for(int i =  0; i < MAX_CARTAS; i++){
+        if(jogador->maoJogador[i]->used == 1){
+            
+            *(jogador->maoJogador[i]) = sorteiaCarta(carta);
+            jogador->score += jogador->maoJogador[i]->num;
+            jogador->maoJogador[i]->used = 0;
+
+            comprado = 0;
         }
     }
 
-    printf("Sua mao esta cheia.\n");
+    if(comprado == 1){
+        printf("Sua mao esta cheia.");
+    }
 }//não sei se isso funciona
 
 /*O pensamento é o seguinte, quando o jogador compra a carta, o for percorre a mão do jogador até encontrar
@@ -43,8 +43,20 @@ void comprarCarta(Jogador* jogador, Carta* carta){
 
 void imprimeMao(Jogador* jogador){
     for(int i = 0; i < MAX_CARTAS; i++){
-        if(jogador->maoJogador[i].used == 1){
-            imprimeCarta(jogador->maoJogador[i]);
+        if(jogador->maoJogador[i]->used == 1){
+            imprimeCarta(*(jogador->maoJogador[i]));
+        
+        }else{
+            break;
+
+        }
+    }
+}
+
+void imprimeMaoASCII(Jogador* jogador){
+    for(int i = 0; i < MAX_CARTAS; i++){
+        if(jogador->maoJogador[i]->used == 1){
+            imprimeCartaASCII(jogador->maoJogador[i]);
         
         }else{
             break;

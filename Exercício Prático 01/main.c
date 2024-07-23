@@ -23,7 +23,7 @@ int main(){
     printf("Qual o modo de jogo desejado?\n");
     printf("(1) Teste sua sorte (single player);\n");
     printf("(2) 1 v 1 - cpu;\n");
-    printf("(3) 1 v 1 - multiplayer");
+    printf("(3) 1 v 1 - multiplayer\n");
 
     do{
         scanf("%d", &opcao);
@@ -35,7 +35,7 @@ int main(){
             printf("Insira o seu nome:\n");
             scanf(" %s", &nome);
 
-            *jogador = inicializaJogador(nome);
+            inicializaJogador(jogador, nome);
 
             comecaJogo(jogador, baralho);
 
@@ -45,9 +45,10 @@ int main(){
 
             do{
                 printf("O que deseja fazer a seguir?\n");
-                printf("(1) Mostrar cartas;\n");
-                printf("(2) Comprar carta;\n");
-                printf("(3) Parar.");
+                printf("(1) Mostrar cartas (padrão);\n");
+                printf("(2) Mostrar cartas (ASCII);\n");
+                printf("(3) Comprar carta;\n");
+                printf("(4) Parar.\n");
 
                 scanf("%d", &opcao);
 
@@ -60,11 +61,17 @@ int main(){
 
                 case 2:
 
-                    comprarCarta(jogador, baralho);
+                    imprimeMaoASCII(jogador);
                     
                     break;
 
                 case 3:
+
+                    comprarCarta(jogador, baralho);
+                    
+                    break;
+
+                case 4:
 
                     printf("Terminando jogo.\n");
                     
@@ -93,10 +100,10 @@ int main(){
             printf("Insira o seu nome:\n");
             scanf(" %s", &nome);
 
-            jogador[0] = inicializaJogador(nome); //talvez essa  manipulação de string não funcione
-            jogador[1] = inicializaJogador("Jogador_02");
+            inicializaJogador(&jogador[0], nome); //talvez essa  manipulação de string não funcione
+            inicializaJogador(&jogador[1], "Jogador_02");
 
-            comecaJogo(&jogador[0], baralho);   //fica redundante a escrita, mas deixa o código bem
+            comecaJogo(&jogador[0], baralho);   //fica redundante a escrita, mas deixa o código bem compreensível
             comecaJogo(&jogador[1], baralho);
 
             printf("Suas cartas:\n");
@@ -107,7 +114,7 @@ int main(){
                 printf("O que deseja fazer a seguir?\n");
                 printf("(1) Mostrar cartas;\n");
                 printf("(2) Comprar carta;\n");
-                printf("(3) Parar.");
+                printf("(3) Parar.\n");
 
                 scanf("%d", &opcao);
 

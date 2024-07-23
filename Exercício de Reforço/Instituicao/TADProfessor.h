@@ -9,7 +9,8 @@ typedef struct{
     float salario;
 }Professor;
 
-void inicializaProfessor(Professor* professor, char nome[], int matricula, char contrato, int idade, float salario);
+Professor* inicializaProfessor(char nome[], int matricula, char contrato, int idade, float salario);
 void imprimeProfessor(Professor* professor);
+int destroiProfessor(Professor* Professor);
 
 #endif

@@ -44,6 +44,12 @@ Carta* inicializaBaralho(){
 * vez que ocorrer uma compra, deve haver um baralho definido.
 */
 
+void imprimeBaralho(Carta* carta){
+    for(int i = 0; i < TAM_BARALHO; i++){
+        imprimeCarta(carta[i]);
+    }
+}
+
 
 int verificaBaralho(Carta* carta){
     int temBaralho;

@@ -8,10 +8,10 @@
 typedef struct{
     char nome[10];
     int score;
-    Carta maoJogador[MAX_CARTAS];
+    Carta* maoJogador[MAX_CARTAS];
 }Jogador;
 
-Jogador inicializaJogador(char nome[]);
+void inicializaJogador(Jogador* jogador, char nome[]);
 void comprarCarta(Jogador* jogador, Carta* carta);
 void imprimeMao(Jogador* jogador);
 void comecaJogo(Jogador* jogador, Carta* carta);

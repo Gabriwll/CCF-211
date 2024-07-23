@@ -1,0 +1,5 @@
+4
+Av Brigadeiro;Vermelho;200;50
+Av Paulista;Azul;300;70
+Rua Augusta;Verde;250;60
+Rua XV de Novembro;Amarelo;150;40
