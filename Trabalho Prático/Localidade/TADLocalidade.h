@@ -5,7 +5,7 @@
 
 typedef struct Localidade{
     char endereco[MAX_CARACTERES];
-    int posicaoTabuleiro;
+    int posicaoTabuleiro; //posição = 0 representa a casa de início da lista
 
     char cor;
     int custoCompra;
@@ -13,5 +13,7 @@ typedef struct Localidade{
     struct Jogador* proprietario;
     
 }Localidade;
+
+void inicializaLocalidade(FILE* arquivoLocalidade, Localidade* localidade, int posicaoTabuleiro);
 
 #endif
