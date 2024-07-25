@@ -9,7 +9,6 @@ typedef struct Jogo{
 }Jogo;
 
 void preencheTabuleiro(Tabuleiro* tabuleiro);
-void adicionaJogador();
 int rolaDados(int quantDados);
 void movimentaJogador(Jogador* jogador);
 void compraPropriedade();

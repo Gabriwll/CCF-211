@@ -8,48 +8,19 @@
 #include <time.h>
 
 void preencheTabuleiro(Tabuleiro* tabuleiro){
-    FILE* arquivoLocalidades = fopen("../Entrada/localidades.txt", "r");
+    FILE* arquivoLocalidade;
 
-    if(arquivoLocalidades == NULL){
-        printf("erro na abertura do arquivo 'localidades.txt'.\n");
-        return;
+    if((arquivoLocalidade = fopen("../Entrada/localidades.txt", "r")) == NULL){
+        printf("Erro na abertura do arquivo 'localidades.txt'.");
     }
 
-    
-    
-    fclose(arquivoLocalidades);
-}
+    fscanf(arquivoLocalidade, "%d\n", tabuleiro->tamanho);
 
-void adicionaJogador(){
-    Jogador* jogador;
-
-    FILE* arquivoJogadores = fopen("../Entrada/jogadores.txt", "r");
-    int quantJogadores;
-
-    if(arquivoJogadores == NULL){
-        printf("erro na abertura do arquivo 'jogadores.txt'. (1)\n");
-        return;
+    for(int i = 0; i < tabuleiro->tamanho; i++){
+        insereLocalidade(tabuleiro, arquivoLocalidade);
     }
-    fscanf(arquivoJogadores, "%d", &quantJogadores);
 
-    fclose(arquivoJogadores);
-
-    jogador = (Jogador*)malloc(sizeof(Jogador) * quantJogadores);
-
-    printf("Há %d jogadores na mesa.\n", quantJogadores); //linha de teste
-
-    for(int i = 0; i < quantJogadores; i++){
-        inicializaJogador(jogador, quantJogadores);
-    }
-    //inicializar os jogadores e definir a posição deles na casa inicial
-    //definir a quantidade inicial de capital de cada jogador
-
-    jogador = (Jogador*)malloc(sizeof(Jogador) * quantJogadores);
-
-    //eu estou aqui, preciso definir a posição inicial dos jogadores
-
-    free(jogador); //esse free será removido em breve, servirá apenas enquanto não se tem certeza de que
-                   //a função realmente funciona
+    fclose(arquivoLocalidade);
 }
 
 int rolaDados(int quantDados){
@@ -72,5 +43,9 @@ int rolaDados(int quantDados){
 
 void movimentaJogador(Jogador* jogador){
     //parei por aqui
+
+}
+
+void compraPropriedade(){
 
 }

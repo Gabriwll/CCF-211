@@ -16,7 +16,7 @@ typedef struct Tabuleiro{
 
 void inicializaTabuleiro(Tabuleiro* tabuleiro);
 int verificaTamanho(Tabuleiro* tabuleiro);
-void insereLocalidade(Tabuleiro* tabuleiro, Localidade localidade);
+void insereLocalidade(Tabuleiro* tabuleiro, FILE* arquivoLocalidade);
 Localidade avancaCasa(Tabuleiro* tabuleiro, Localidade* localidadeInicial, int quantCasas);
 void imprimeTabuleiro(Tabuleiro* tabuleiro);
 

@@ -28,23 +28,7 @@ int verificaTamanho(Tabuleiro* tabuleiro){
 
 //É necessário verificar se o número de localidades presentes no arquivo está consistente
 
-void montaTabuleiro(Tabuleiro* tabuleiro){
-    FILE* arquivoLocalidade;
-
-    if((arquivoLocalidade = fopen("../Entrada/localidades.txt", "r")) == NULL){
-        printf("Erro na abertura do arquivo 'localidades.txt'.");
-    }
-
-    fscanf(arquivoLocalidade, "%d\n", tabuleiro->tamanho);
-
-    for(int i = 0; i < tabuleiro->tamanho; i++){
-        insereLocalidade(tabuleiro, arquivoLocalidade);
-    }
-
-    fclose(arquivoLocalidade);
-}
-
-int insereLocalidade(Tabuleiro* tabuleiro, FILE* arquivoLocalidade){
+void insereLocalidade(Tabuleiro* tabuleiro, FILE* arquivoLocalidade){
     tabuleiro->ultimo->prox = (Celula*)malloc(sizeof(Celula));
     tabuleiro->ultimo = tabuleiro->ultimo->prox;
 
@@ -52,6 +36,9 @@ int insereLocalidade(Tabuleiro* tabuleiro, FILE* arquivoLocalidade){
     tabuleiro->tamanho++;
 
     inicializaLocalidade(arquivoLocalidade, &(tabuleiro->ultimo->elemento), tabuleiro->tamanho);
+    /*talvez o último parâmetro seja um erro, passar o tamanho atual do tabuleiro como posição do próximo item
+    * parece estranho, pela contagem ou não da célula head
+    */
 }
 
 Localidade avancaCasa(Tabuleiro* tabuleiro, Localidade* localidadeInicial, int quantCasas){

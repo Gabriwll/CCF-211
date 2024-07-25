@@ -12,5 +12,4 @@ void inicializaLocalidade(FILE* arquivoLocalidade, Localidade* localidade, int p
 
     localidade->posicaoTabuleiro = posicaoTabuleiro;
 
-    close(arquivoLocalidade);
 }

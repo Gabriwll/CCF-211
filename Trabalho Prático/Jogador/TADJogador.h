@@ -10,6 +10,8 @@ typedef struct Jogador{
     Localidade* localidade;
 }Jogador;
 
-Jogador* inicializaJogador(Jogador* jogador, int quantJogadores);
+void inicializaJogadores(Jogador* jogador);
+int adicionaSaldo(Jogador* jogador, int saldo);
+int removeSaldo(Jogador* Jogador, int saldo);
 
 #endif

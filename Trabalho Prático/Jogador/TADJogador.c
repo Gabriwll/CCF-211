@@ -1,21 +1,19 @@
 #include "TADJogador.h"
+#include "../Localidade/TADLocalidade.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
 void inicializaJogadores(Jogador* jogador){
-    FILE* arquivoJogadores;
+    FILE* arquivoJogadores = fopen("../Entrada/jogadores.txt", "r");
     int quantJogadores;
 
     if(arquivoJogadores == NULL){
-        printf("Erro na abertura do arquivo 'jogadores.txt'. (2)\n");
-        return; //não sei como operar esse retorno de erro
+        printf("erro na abertura do arquivo 'jogadores.txt'. (1)\n");
+        return;
     }
+    fscanf(arquivoJogadores, "%d", &quantJogadores);
 
-    fscanf(arquivoJogadores, "%d", quantJogadores);
-    /*Se a função fscanf trabalhar com um ponteiro que percorre o arquivo e o mantenha salvo de alguma forma,
-    * esse comando vai fazer com que a leitura de arquivo salte a linha inicial.
-    */
     jogador = (Jogador*)malloc(sizeof(Jogador) * quantJogadores);
 
     for(int i = 0; i < quantJogadores; i++){
@@ -32,4 +30,24 @@ void inicializaJogadores(Jogador* jogador){
     }
 
     //fim das linhas de teste.
+}
+
+int adicionaSaldo(Jogador* jogador, int saldo){
+    jogador->dinheiro += saldo;
+
+    printf("%d acrescidos com sucesso!\n Saldo atual de %s: %d", saldo, jogador->nome, jogador->dinheiro);
+
+    return 1;
+}
+
+int removeSaldo(Jogador* jogador, int saldo){
+    if((jogador->dinheiro - saldo) < 0){
+        return 0;
+    }
+
+    jogador->dinheiro -= saldo;
+
+    printf("%d acrescidos com sucesso!\n Saldo atual de %s: %d", saldo, jogador->nome, jogador->dinheiro);
+
+    return 1;
 }
