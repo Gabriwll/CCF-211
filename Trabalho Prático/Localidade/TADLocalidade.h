@@ -10,7 +10,7 @@ typedef struct Localidade{
     char cor;
     int custoCompra;
     int valorAluguel;
-    struct Jogador* proprietario;
+    struct Jogador* proprietario; //o proprietário deve ser setado como NULL quando a localidade não foi adquirida
     
 }Localidade;
 

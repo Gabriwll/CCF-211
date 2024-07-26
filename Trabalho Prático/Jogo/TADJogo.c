@@ -2,10 +2,12 @@
 
 #include "../Tabuleiro/TADTabuleiro.h"
 #include "../Jogador/TADJogador.h"
+#include "../Localidade/TADLocalidade.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 
 void preencheTabuleiro(Tabuleiro* tabuleiro){
     FILE* arquivoLocalidade;
@@ -46,6 +48,38 @@ void movimentaJogador(Jogador* jogador){
 
 }
 
-void compraPropriedade(){
+int compraPropriedade(Jogador* jogador, Localidade* localidade){
+    if(localidade->custoCompra > jogador->dinheiro){
+        printf("Impossivel realizar a compra (saldo insuficiente).\n");
+        return 0;
+    }
 
+    localidade->proprietario = jogador;
+    removeSaldo(jogador, localidade->custoCompra);
+
+    return 1;
+}
+
+void pagaAluguel(Jogador* jogador, Localidade* localidade){
+    jogador->dinheiro -= localidade->valorAluguel;
+    
+    if(verificaFalencia(jogador)){
+        
+    }
+}
+
+int verificaFalencia(Jogador* jogador){
+
+    /*teremos problemas caso o código rode toda a verificação em todos os casos.
+    * outro problema pode se gerar a partir da passagem de parâmetro da função fabs(double)
+    * (a variável jogador->dinheiro é do tipo inteiro).
+    */
+    if((jogador->dinheiro >= 0) || !salvaguarda(jogador, (int)fabs(jogador->dinheiro)))
+        return 1;
+    
+    return 0;
+}
+
+int salvaguarda(Jogador* jogador, int divida){
+    
 }

@@ -11,5 +11,6 @@ void inicializaLocalidade(FILE* arquivoLocalidade, Localidade* localidade, int p
                                                localidade->valorAluguel);
 
     localidade->posicaoTabuleiro = posicaoTabuleiro;
+    localidade->proprietario = NULL;
 
 }
