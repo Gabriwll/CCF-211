@@ -48,18 +48,6 @@ void movimentaJogador(Jogador* jogador){
 
 }
 
-int compraPropriedade(Jogador* jogador, Localidade* localidade){
-    if(localidade->custoCompra > jogador->dinheiro){
-        printf("Impossivel realizar a compra (saldo insuficiente).\n");
-        return 0;
-    }
-
-    localidade->proprietario = jogador;
-    removeSaldo(jogador, localidade->custoCompra);
-
-    return 1;
-}
-
 void pagaAluguel(Jogador* jogador, Localidade* localidade){
     jogador->dinheiro -= localidade->valorAluguel;
     
@@ -74,12 +62,18 @@ int verificaFalencia(Jogador* jogador){
     * outro problema pode se gerar a partir da passagem de parâmetro da função fabs(double)
     * (a variável jogador->dinheiro é do tipo inteiro).
     */
-    if((jogador->dinheiro >= 0) || !salvaguarda(jogador, (int)fabs(jogador->dinheiro)))
+    if((jogador->dinheiro >= 0) || !salvaguarda(jogador, (int)fabs(jogador->dinheiro))){
         return 1;
-    
+    }
+
     return 0;
 }
 
 int salvaguarda(Jogador* jogador, int divida){
-    
+    int i = 0;
+
+    while(divida < 0){
+        venderPropriedade(jogador, jogador->bens[i]);
+        i++;
+    }
 }

@@ -51,3 +51,32 @@ int removeSaldo(Jogador* jogador, int saldo){
 
     return 1;
 }
+
+int compraPropriedade(Jogador* jogador, Localidade* localidade){
+    if(localidade->proprietario != NULL){
+        if(jogador->dinheiro > localidade->custoCompra){
+            localidade->proprietario = &jogador;
+            removeSaldo(jogador, localidade->custoCompra);
+            printf("%s adquirida com sucesso!", localidade->endereco);
+
+            return 1;
+        }
+        printf("Saldo insuficiente.");
+    }
+    printf("localidade ja possui dono.");
+
+    return 0;
+}
+
+int venderPropriedade(Jogador* jogador, Localidade* localidade){
+    if(localidade->proprietario == jogador){ //testar se a relação de ponteiro para proprietário está correta
+        jogador->dinheiro += (localidade->custoCompra * 0.6) * localidade->nivelConstrucao;
+        //perde 60% do valor da localidade
+        localidade->nivelConstrucao = 1;
+        localidade->proprietario = NULL;
+
+        return 1;
+    }
+
+    return 0;
+}
