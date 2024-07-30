@@ -1,10 +1,12 @@
 #include "TADJogador.h"
+#include "../Jogo/TADJogo.h"
 #include "../Localidade/TADLocalidade.h"
+#include "../Tabuleiro/TADTabuleiro.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
-void inicializaJogadores(Jogador* jogador){
+void inicializaJogadores(Jogador* jogador, Tabuleiro* tabuleiro){
     FILE* arquivoJogadores = fopen("../Entrada/jogadores.txt", "r");
     int quantJogadores;
 
@@ -18,6 +20,9 @@ void inicializaJogadores(Jogador* jogador){
 
     for(int i = 0; i < quantJogadores; i++){
         fscanf(arquivoJogadores, "%s;%d;%d\n", jogador[i].nome, jogador[i].dinheiro, jogador[i].id);
+        
+        jogador[i].posicaoAtual = tabuleiro->primeiro;
+        jogador[i].jogando = 1;
     }
 
     fclose(arquivoJogadores);
@@ -41,11 +46,11 @@ int adicionaSaldo(Jogador* jogador, int saldo){
 }
 
 int removeSaldo(Jogador* jogador, int saldo){
-    if((jogador->dinheiro - saldo) < 0){
-        return 0;
-    }
-
     jogador->dinheiro -= saldo;
+
+    if(jogador->dinheiro < 0){
+        verificaFalencia(jogador);
+    }
 
     printf("%d acrescidos com sucesso!\n Saldo atual de %s: %d", saldo, jogador->nome, jogador->dinheiro);
 

@@ -10,12 +10,13 @@ typedef struct Jogo{
 
 void preencheTabuleiro(Tabuleiro* tabuleiro);
 int rolaDados(int quantDados);
-void movimentaJogador(Jogador* jogador);
+Celula* movimentaJogador(Jogador* jogador, int quantCasas);
 int compraPropriedade(Jogador* jogador, Localidade* localidade);
-void pagaAluguel();
-void constroiCasa();
+void pagaAluguel(Jogador* jogador, Localidade* localidade);
+int constroiCasa(Tabuleiro* tabuleiro, Jogador* jogador);
+int verificaMonopolio(Tabuleiro* tabuleiro, Jogador* jogador);
 int verificaFalencia(Jogador* jogador);
-int salvaguarda(Jogador* jogador, int divida);
+int salvaguarda(Jogador* jogador);
 void proximaRodada();
 void imprimeEstadoJogo();
 
