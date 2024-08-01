@@ -27,7 +27,7 @@ typedef struct VetorJogadores{
     int quantJogadores;
 }VetorJogadores;
 
-int inicializaJogadores(Jogador* jogador, Tabuleiro* tabuleiro);
+int inicializaJogadores(VetorJogadores* vetorJogadores, Tabuleiro* tabuleiro);
 int adicionaSaldo(Jogador* jogador, int saldo);
 int removeSaldo(Jogador* jogador, int saldo);
 int compraPropriedade(Jogador* jogador, Localidade* localidade);
