@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void inicializaJogadores(Jogador* jogador, Tabuleiro* tabuleiro){
+int inicializaJogadores(VetorJogadores* vetorJogadores, Tabuleiro* tabuleiro){
     FILE* arquivoJogadores = fopen("../Entrada/jogadores.txt", "r");
     int quantJogadores;
 
@@ -16,25 +16,33 @@ void inicializaJogadores(Jogador* jogador, Tabuleiro* tabuleiro){
     }
     fscanf(arquivoJogadores, "%d", &quantJogadores);
 
-    jogador = (Jogador*)malloc(sizeof(Jogador) * quantJogadores);
+    vetorJogadores->jogador = (Jogador*)malloc(sizeof(Jogador) * quantJogadores);
 
     for(int i = 0; i < quantJogadores; i++){
-        fscanf(arquivoJogadores, "%s;%d;%d\n", jogador[i].nome, jogador[i].dinheiro, jogador[i].id);
+        fscanf(arquivoJogadores, "%s;%d;%d\n", vetorJogadores->jogador[i].nome, 
+                                               vetorJogadores->jogador[i].dinheiro, 
+                                               vetorJogadores->jogador[i].id);
         
-        jogador[i].posicaoAtual = tabuleiro->primeiro;
-        jogador[i].jogando = 1;
+        vetorJogadores->jogador[i].posicaoAtual = tabuleiro->primeiro;
+        vetorJogadores->jogador[i].jogando = 1;
     }
 
     fclose(arquivoJogadores);
 
+    vetorJogadores->comeco = 0;
+    vetorJogadores->final = quantJogadores - 1;
+    vetorJogadores->posicaoAtual = 0;
+
     //linhas de teste a seguir:
 
     for(int i = 0; i < quantJogadores; i++){
-        printf("Jogador %d:\nNome: %s\nId: %d\nDinheiro: %d\n\n", (i+1), jogador[i].nome, jogador[i].id, 
-                                                                  jogador[i].dinheiro);
+        printf("Jogador %d:\nNome: %s\nId: %d\nDinheiro: %d\n\n", (i+1), vetorJogadores->jogador[i].nome, vetorJogadores->jogador[i].id, 
+                                                                  vetorJogadores->jogador[i].dinheiro);
     }
 
     //fim das linhas de teste.
+
+    return 1;
 }
 
 int adicionaSaldo(Jogador* jogador, int saldo){

@@ -19,5 +19,6 @@ int verificaTamanho(Tabuleiro* tabuleiro);
 void insereLocalidade(Tabuleiro* tabuleiro, FILE* arquivoLocalidade);
 Localidade avancaCasa(Tabuleiro* tabuleiro, Localidade* localidadeInicial, int quantCasas);
 void imprimeTabuleiro(Tabuleiro* tabuleiro);
+void destroiTabuleiro(Tabuleiro* tabuleiro);
 
 #endif

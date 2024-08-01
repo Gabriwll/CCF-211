@@ -17,10 +17,20 @@ typedef struct Jogador{
     int jogando;
 }Jogador;
 
-void inicializaJogadores(Jogador* jogador, Tabuleiro* tabuleiro);
+typedef struct VetorJogadores{
+    Jogador* jogador;
+
+    int comeco;
+    int final;
+    int posicaoAtual;
+
+    int quantJogadores;
+}VetorJogadores;
+
+int inicializaJogadores(Jogador* jogador, Tabuleiro* tabuleiro);
 int adicionaSaldo(Jogador* jogador, int saldo);
 int removeSaldo(Jogador* jogador, int saldo);
 int compraPropriedade(Jogador* jogador, Localidade* localidade);
-int venderPropriedade(Jogador * jogador, Localidade* localidade);
+int venderPropriedade(Jogador* jogador, Localidade* localidade);
 
 #endif

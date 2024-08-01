@@ -114,3 +114,42 @@ int salvaguarda(Jogador* jogador){
     }
     return 0;
 }
+
+void proximaRodada(VetorJogadores* vetorJogadores, int* numRodadas){
+    if(numRodadas > MAX_RODADAS){
+        //finalizaJogo();
+    }
+    if(vetorJogadores->posicaoAtual == (vetorJogadores->final - 1)){
+        *numRodadas++;
+    }
+    
+    do{ //são necessários testes para averiaguar se essa aritmética percorre corretamente os turnos do jogo
+        vetorJogadores->posicaoAtual = (vetorJogadores->posicaoAtual + 1) % vetorJogadores->quantJogadores;
+    
+    }while((vetorJogadores->jogador[vetorJogadores->posicaoAtual].jogando) == 0);
+
+}
+
+void finalizaJogo(Jogo* jogo, VetorJogadores* jogadores){
+    FILE* arquivoFimDeJogo;
+
+    if((arquivoFimDeJogo = fopen("../Saida/fim_de_jogo.txt", "w")) == NULL){
+        printf("falha ao abrir o arquivo fim_de_jogo.txt.\n");
+        return;
+    }
+
+    /*A forma como o sistema preenche o arquivo pode ser alterada a fim de comportar melhor a lista de 
+    * propriedades de cada jogador
+    */
+    fprintf(arquivoFimDeJogo, "Jogador;Saldo;Propriedades\n*");
+
+    for(int i = 0; i < jogo->numJogadores; i++){
+        fprintf(arquivoFimDeJogo, "%s;%d;propriedades\n", jogadores->jogador[i].nome, 
+                                                          jogadores->jogador[i].dinheiro);
+    }
+    //ainda não está pronto
+    fclose(arquivoFimDeJogo);
+    
+    free(jogadores->jogador);
+    
+}

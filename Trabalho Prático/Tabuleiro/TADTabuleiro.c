@@ -63,4 +63,17 @@ void imprimeTabuleiro(Tabuleiro* tabuleiro){
     }while(casaAtual != tabuleiro->primeiro);
 }
 
+void destroiTabuleiro(Tabuleiro* tabuleiro){
+    Celula* posicaoAtual = tabuleiro->primeiro->prox;
+
+    while(posicaoAtual != tabuleiro->primeiro){
+        Celula* prox = posicaoAtual->prox;
+        free(posicaoAtual);
+        posicaoAtual = prox;
+    }
+
+    free(tabuleiro->primeiro);
+    free(tabuleiro);
+}
+
 //Início -> endereço1 -> endereço2 -> ... -> endereçoN -> Início
