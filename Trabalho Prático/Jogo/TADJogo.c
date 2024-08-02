@@ -9,17 +9,17 @@
 #include <time.h>
 #include <string.h>
 
-void preencheTabuleiro(Tabuleiro* tabuleiro){
+void preencheTabuleiro(Jogo* jogo){
     FILE* arquivoLocalidade;
 
     if((arquivoLocalidade = fopen("../Entrada/localidades.txt", "r")) == NULL){
         printf("Erro na abertura do arquivo 'localidades.txt'.");
     }
 
-    fscanf(arquivoLocalidade, "%d\n", tabuleiro->tamanho);
+    fscanf(arquivoLocalidade, "%d\n", jogo->tabuleiro->tamanho);
 
-    for(int i = 0; i < tabuleiro->tamanho; i++){
-        insereLocalidade(tabuleiro, arquivoLocalidade);
+    for(int i = 0; i < jogo->tabuleiro->tamanho; i++){
+        insereLocalidade(jogo->tabuleiro, arquivoLocalidade);
     }
 
     fclose(arquivoLocalidade);
@@ -130,7 +130,11 @@ void proximaRodada(VetorJogadores* vetorJogadores, int* numRodadas){
 
 }
 
-void finalizaJogo(Jogo* jogo, VetorJogadores* jogadores){
+void imprimeEstadoJogo(){
+    
+}
+
+void finalizaJogo(Jogo* jogo){
     FILE* arquivoFimDeJogo;
 
     if((arquivoFimDeJogo = fopen("../Saida/fim_de_jogo.txt", "w")) == NULL){
@@ -144,12 +148,13 @@ void finalizaJogo(Jogo* jogo, VetorJogadores* jogadores){
     fprintf(arquivoFimDeJogo, "Jogador;Saldo;Propriedades\n*");
 
     for(int i = 0; i < jogo->numJogadores; i++){
-        fprintf(arquivoFimDeJogo, "%s;%d;propriedades\n", jogadores->jogador[i].nome, 
-                                                          jogadores->jogador[i].dinheiro);
+        fprintf(arquivoFimDeJogo, "%s;%d;propriedades\n", jogo->vetorJogadores->jogador[i].nome, 
+                                                          jogo->vetorJogadores->jogador[i].dinheiro);
     }
     //ainda não está pronto
     fclose(arquivoFimDeJogo);
     
-    free(jogadores->jogador);
+    free(jogo->vetorJogadores->jogador);
+    destroiTabuleiro(jogo->tabuleiro);
     
 }
