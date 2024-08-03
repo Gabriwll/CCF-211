@@ -25,6 +25,8 @@ int inicializaJogadores(VetorJogadores* vetorJogadores, Tabuleiro* tabuleiro){
         
         vetorJogadores->jogador[i].posicaoAtual = tabuleiro->primeiro;
         vetorJogadores->jogador[i].jogando = 1;
+
+        vetorJogadores->jogador[i].quantBens = 0;
     }
 
     fclose(arquivoJogadores);
@@ -69,6 +71,9 @@ int compraPropriedade(Jogador* jogador, Localidade* localidade){
     if(localidade->proprietario != NULL){
         if(jogador->dinheiro > localidade->custoCompra){
             localidade->proprietario = &jogador;
+            jogador->bens[jogador->quantBens] = localidade;
+            jogador->quantBens++;
+
             removeSaldo(jogador, localidade->custoCompra);
             printf("%s adquirida com sucesso!", localidade->endereco);
 

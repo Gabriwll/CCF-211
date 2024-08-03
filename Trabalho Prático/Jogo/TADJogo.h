@@ -24,6 +24,6 @@ int verificaFalencia(Jogador* jogador);
 int salvaguarda(Jogador* jogador);
 void proximaRodada(VetorJogadores* vetorJogadores, int* numRodadas);
 void imprimeEstadoJogo();
-void finalizaJogo(Jogo* jogo, VetorJogadores* vetorJogadores, Tabuleiro* tabuleiro);
+void finalizaJogo(Jogo* jogo);
 
 #endif

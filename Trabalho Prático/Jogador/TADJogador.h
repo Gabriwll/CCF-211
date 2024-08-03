@@ -11,6 +11,7 @@ typedef struct Jogador{
 
     //movimentação e pertences.
     Localidade** bens;
+    int quantBens; //código ainda não adaptado para receber esse atributo novo
     Celula* posicaoAtual;
 
     //auxiliar de gerenciador de turnos

@@ -16,10 +16,10 @@ void preencheTabuleiro(Jogo* jogo){
         printf("Erro na abertura do arquivo 'localidades.txt'.");
     }
 
-    fscanf(arquivoLocalidade, "%d\n", jogo->tabuleiro->tamanho);
+    fscanf(arquivoLocalidade, "%d\n", jogo->tabuleiro.tamanho);
 
-    for(int i = 0; i < jogo->tabuleiro->tamanho; i++){
-        insereLocalidade(jogo->tabuleiro, arquivoLocalidade);
+    for(int i = 0; i < jogo->tabuleiro.tamanho; i++){
+        insereLocalidade(&jogo->tabuleiro, arquivoLocalidade);
     }
 
     fclose(arquivoLocalidade);
@@ -130,12 +130,36 @@ void proximaRodada(VetorJogadores* vetorJogadores, int* numRodadas){
 
 }
 
-void imprimeEstadoJogo(){
-    
+void imprimeEstadoJogo(Jogo* jogo){
+    printf("Jogadores:\n");
+
+    for(int i = 0; i < jogo->numJogadores; i++){
+        printf("\nJogador %d:\n\n", jogo->vetorJogadores->jogador[i].id);
+        
+        printf("Nome: %s\tDinheiro: %d\n", jogo->vetorJogadores->jogador[i].nome, 
+                                           jogo->vetorJogadores->jogador[i].dinheiro);
+
+        printf("Propriedades:\n");
+        
+        for(int j = 0; j < jogo->vetorJogadores->jogador[i].quantBens; j++){
+            if(jogo->vetorJogadores->jogador[i].bens[j]->nivelConstrucao == 1){
+                printf("[#] ");
+            }
+            if(jogo->vetorJogadores->jogador[i].bens[j]->nivelConstrucao == 2){
+                printf("[@] ");
+            }
+
+            printf("%s\n", jogo->vetorJogadores->jogador[i].bens[j]->endereco);
+        }
+        
+    }
 }
 
 void finalizaJogo(Jogo* jogo){
     FILE* arquivoFimDeJogo;
+    FILE* arquivoTabuleiroFinal;
+
+    Celula* posicaoAtual = jogo->tabuleiro.primeiro;
 
     if((arquivoFimDeJogo = fopen("../Saida/fim_de_jogo.txt", "w")) == NULL){
         printf("falha ao abrir o arquivo fim_de_jogo.txt.\n");
@@ -145,16 +169,50 @@ void finalizaJogo(Jogo* jogo){
     /*A forma como o sistema preenche o arquivo pode ser alterada a fim de comportar melhor a lista de 
     * propriedades de cada jogador
     */
-    fprintf(arquivoFimDeJogo, "Jogador;Saldo;Propriedades\n*");
-
     for(int i = 0; i < jogo->numJogadores; i++){
-        fprintf(arquivoFimDeJogo, "%s;%d;propriedades\n", jogo->vetorJogadores->jogador[i].nome, 
-                                                          jogo->vetorJogadores->jogador[i].dinheiro);
+        fprintf(arquivoFimDeJogo, "\nJogador %d:\n\n", jogo->vetorJogadores->jogador[i].id);
+        
+        fprintf(arquivoFimDeJogo, "Nome: %s\tDinheiro: %d\n", jogo->vetorJogadores->jogador[i].nome, 
+                                           jogo->vetorJogadores->jogador[i].dinheiro);
+
+        fprintf(arquivoFimDeJogo, "Propriedades:\n");
+        
+        for(int j = 0; j < jogo->vetorJogadores->jogador[i].quantBens; j++){
+            if(jogo->vetorJogadores->jogador[i].bens[j]->nivelConstrucao == 1){
+                fprintf(arquivoFimDeJogo, "[#] ");
+            }
+            if(jogo->vetorJogadores->jogador[i].bens[j]->nivelConstrucao == 2){
+                fprintf(arquivoFimDeJogo, "[@] ");
+            }
+
+            fprintf(arquivoFimDeJogo, "%s\n", jogo->vetorJogadores->jogador[i].bens[j]->endereco);
+        }
+        
     }
-    //ainda não está pronto
+
     fclose(arquivoFimDeJogo);
+
+    if(arquivoTabuleiroFinal = fopen("../Saida/tabuleiro_final.txt", "w") == NULL){
+        printf("falha ao abrir o arquivo tabuleiro_final.txt.\n");
+        return;
+    }
+
+    fprintf(arquivoTabuleiroFinal, "Tabuleiro Final:\nInicio");
+
+    while(posicaoAtual != jogo->tabuleiro.primeiro){
+        fprintf(arquivoTabuleiroFinal, " -> %s", posicaoAtual->elemento.endereco);
+
+        if(posicaoAtual->elemento.nivelConstrucao == 1){
+            fprintf(arquivoTabuleiroFinal, " [#]");
+        }
+        if(posicaoAtual->elemento.nivelConstrucao == 2){
+            fprintf(arquivoTabuleiroFinal, " [@]");
+        }
+    }
+
+    fclose(arquivoTabuleiroFinal);
     
     free(jogo->vetorJogadores->jogador);
-    destroiTabuleiro(jogo->tabuleiro);
+    destroiTabuleiro(&jogo->tabuleiro);
     
 }
