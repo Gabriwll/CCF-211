@@ -1,6 +1,7 @@
 #ifndef TADTABULEIRO_H
 #define TADTABULEIRO_H
 
+#include "../Localidade/TADLocalidade.h"
 
 typedef struct Celula{
     struct Localidade elemento;
@@ -14,11 +15,11 @@ typedef struct Tabuleiro{
 } Tabuleiro;
 
 
-void inicializaTabuleiro(Tabuleiro* tabuleiro);
-int verificaTamanho(Tabuleiro* tabuleiro);
-void insereLocalidade(Tabuleiro* tabuleiro, FILE* arquivoLocalidade);
-Localidade avancaCasa(Tabuleiro* tabuleiro, Localidade* localidadeInicial, int quantCasas);
-void imprimeTabuleiro(Tabuleiro* tabuleiro);
-void destroiTabuleiro(Tabuleiro* tabuleiro);
+void inicializaTabuleiro(struct Tabuleiro* tabuleiro);
+int verificaTamanho(struct Tabuleiro* tabuleiro);
+void insereLocalidade(struct Tabuleiro* tabuleiro, FILE* arquivoLocalidade);
+//Localidade avancaCasa(struct Tabuleiro* tabuleiro, struct Localidade* localidadeInicial, int quantCasas);
+void imprimeTabuleiro(struct Tabuleiro* tabuleiro);
+void destroiTabuleiro(struct Tabuleiro* tabuleiro);
 
 #endif

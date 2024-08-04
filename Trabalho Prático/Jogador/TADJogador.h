@@ -1,6 +1,10 @@
 #ifndef TADJOGADOR_H
 #define TADJOGADOR_H
 
+#include "../Jogo/TADJogo.h"
+#include "../Localidade/TADLocalidade.h"
+#include "../Tabuleiro/TADTabuleiro.h"
+
 #define MAX_CARACTERES 50
 
 typedef struct Jogador{
@@ -10,16 +14,16 @@ typedef struct Jogador{
     int dinheiro;
 
     //movimentação e pertences.
-    Localidade** bens;
+    struct Localidade** bens;
     int quantBens; //código ainda não adaptado para receber esse atributo novo
-    Celula* posicaoAtual;
+    struct Celula* posicaoAtual;
 
     //auxiliar de gerenciador de turnos
     int jogando;
 }Jogador;
 
 typedef struct VetorJogadores{
-    Jogador* jogador;
+    struct Jogador* jogador;
 
     int comeco;
     int final;
@@ -28,10 +32,10 @@ typedef struct VetorJogadores{
     int quantJogadores;
 }VetorJogadores;
 
-int inicializaJogadores(VetorJogadores* vetorJogadores, Tabuleiro* tabuleiro);
-int adicionaSaldo(Jogador* jogador, int saldo);
-int removeSaldo(Jogador* jogador, int saldo);
-int compraPropriedade(Jogador* jogador, Localidade* localidade);
-int venderPropriedade(Jogador* jogador, Localidade* localidade);
+int inicializaJogadores(struct VetorJogadores* vetorJogadores, struct Tabuleiro* tabuleiro);
+int adicionaSaldo(struct Jogador* jogador, int saldo);
+int removeSaldo(struct Jogador* jogador, int saldo);
+int compraPropriedade(struct Jogador* jogador, struct Localidade* localidade);
+int venderPropriedade(struct Jogador* jogador, struct Localidade* localidade);
 
 #endif

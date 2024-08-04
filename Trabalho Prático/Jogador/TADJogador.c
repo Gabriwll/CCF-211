@@ -1,20 +1,17 @@
 #include "TADJogador.h"
-#include "../Jogo/TADJogo.h"
-#include "../Localidade/TADLocalidade.h"
-#include "../Tabuleiro/TADTabuleiro.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
-int inicializaJogadores(VetorJogadores* vetorJogadores, Tabuleiro* tabuleiro){
+int inicializaJogadores(struct VetorJogadores* vetorJogadores, struct Tabuleiro* tabuleiro){
     FILE* arquivoJogadores = fopen("../Entrada/jogadores.txt", "r");
     int quantJogadores;
 
     if(arquivoJogadores == NULL){
         printf("erro na abertura do arquivo 'jogadores.txt'. (1)\n");
-        return;
+        return 0;
     }
-    fscanf(arquivoJogadores, "%d", &quantJogadores);
+    fscanf(arquivoJogadores, "%d\n", &quantJogadores);
 
     vetorJogadores->jogador = (Jogador*)malloc(sizeof(Jogador) * quantJogadores);
 
@@ -22,7 +19,7 @@ int inicializaJogadores(VetorJogadores* vetorJogadores, Tabuleiro* tabuleiro){
         fscanf(arquivoJogadores, "%s;%d;%d\n", vetorJogadores->jogador[i].nome, 
                                                vetorJogadores->jogador[i].dinheiro, 
                                                vetorJogadores->jogador[i].id);
-        
+
         vetorJogadores->jogador[i].posicaoAtual = tabuleiro->primeiro;
         vetorJogadores->jogador[i].jogando = 1;
 
@@ -47,7 +44,7 @@ int inicializaJogadores(VetorJogadores* vetorJogadores, Tabuleiro* tabuleiro){
     return 1;
 }
 
-int adicionaSaldo(Jogador* jogador, int saldo){
+int adicionaSaldo(struct Jogador* jogador, int saldo){
     jogador->dinheiro += saldo;
 
     printf("%d acrescidos com sucesso!\n Saldo atual de %s: %d", saldo, jogador->nome, jogador->dinheiro);
@@ -55,7 +52,7 @@ int adicionaSaldo(Jogador* jogador, int saldo){
     return 1;
 }
 
-int removeSaldo(Jogador* jogador, int saldo){
+int removeSaldo(struct Jogador* jogador, int saldo){
     jogador->dinheiro -= saldo;
 
     if(jogador->dinheiro < 0){
@@ -67,10 +64,10 @@ int removeSaldo(Jogador* jogador, int saldo){
     return 1;
 }
 
-int compraPropriedade(Jogador* jogador, Localidade* localidade){
+int compraPropriedade(struct Jogador* jogador, struct Localidade* localidade){
     if(localidade->proprietario != NULL){
         if(jogador->dinheiro > localidade->custoCompra){
-            localidade->proprietario = &jogador;
+            localidade->proprietario = jogador;
             jogador->bens[jogador->quantBens] = localidade;
             jogador->quantBens++;
 
@@ -86,7 +83,7 @@ int compraPropriedade(Jogador* jogador, Localidade* localidade){
     return 0;
 }
 
-int venderPropriedade(Jogador* jogador, Localidade* localidade){
+int venderPropriedade(struct Jogador* jogador, struct Localidade* localidade){
     if(localidade->proprietario == jogador){ //testar se a relação de ponteiro para proprietário está correta
         jogador->dinheiro += (localidade->custoCompra * 0.6) * localidade->nivelConstrucao;
         //perde 60% do valor da localidade

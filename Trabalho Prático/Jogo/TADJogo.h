@@ -1,29 +1,32 @@
 #ifndef TADJOGO_H
 #define TADJOGO_H
 
+#include "../Tabuleiro/TADTabuleiro.h"
+#include "../Jogador/TADJogador.h"
+#include "../Localidade/TADLocalidade.h"
+
 #define MAX_RODADAS 10
 
 typedef struct Jogo{
-    Tabuleiro tabuleiro; 
+    struct Tabuleiro tabuleiro; 
     /*isso deve se tornar um ponteiro, todas as operações passaram por aqui, o que diminuirá a quantidade de
     * parâmetros recebidos em diversas funções e tornará o código mais claro.
     */
-    VetorJogadores* vetorJogadores;
+    struct VetorJogadores* vetorJogadores;
     int numJogadores;
     int numRodadas;
 }Jogo;
 
-void preencheTabuleiro(Tabuleiro* tabuleiro);
+void preencheTabuleiro(struct Jogo* jogo);
 int rolaDados(int quantDados);
-Celula* movimentaJogador(Jogador* jogador, int quantCasas);
-int compraPropriedade(Jogador* jogador, Localidade* localidade);
-void pagaAluguel(Jogador* jogador, Localidade* localidade);
-int constroiCasa(Tabuleiro* tabuleiro, Jogador* jogador);
-int verificaMonopolio(Tabuleiro* tabuleiro, Jogador* jogador);
-int verificaFalencia(Jogador* jogador);
-int salvaguarda(Jogador* jogador);
-void proximaRodada(VetorJogadores* vetorJogadores, int* numRodadas);
-void imprimeEstadoJogo();
-void finalizaJogo(Jogo* jogo);
+struct Celula* movimentaJogador(struct Jogador* jogador, int quantCasas);
+void pagaAluguel(struct Jogador* jogador, struct Localidade* localidade);
+int constroiCasa(struct Tabuleiro* tabuleiro, struct Jogador* jogador);
+int verificaMonopolio(struct Tabuleiro* tabuleiro, struct Jogador* jogador);
+int verificaFalencia(struct Jogador* jogador);
+int salvaguarda(struct Jogador* jogador);
+void proximaRodada(struct VetorJogadores* vetorJogadores, int* numRodadas);
+void imprimeEstadoJogo(struct Jogo* jogo);
+void finalizaJogo(struct Jogo* jogo);
 
 #endif

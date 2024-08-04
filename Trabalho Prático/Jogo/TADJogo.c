@@ -1,15 +1,11 @@
 #include "TADJogo.h"
 
-#include "../Tabuleiro/TADTabuleiro.h"
-#include "../Jogador/TADJogador.h"
-#include "../Localidade/TADLocalidade.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
 
-void preencheTabuleiro(Jogo* jogo){
+void preencheTabuleiro(struct Jogo* jogo){
     FILE* arquivoLocalidade;
 
     if((arquivoLocalidade = fopen("../Entrada/localidades.txt", "r")) == NULL){
@@ -43,7 +39,7 @@ int rolaDados(int quantDados){
     }
 }
 
-Celula* movimentaJogador(Jogador* jogador, int quantCasas){
+struct Celula* movimentaJogador(struct Jogador* jogador, int quantCasas){
     for(int i = 0; i < quantCasas; i++){
         jogador->posicaoAtual = jogador->posicaoAtual->prox;
     }
@@ -51,11 +47,11 @@ Celula* movimentaJogador(Jogador* jogador, int quantCasas){
     return jogador->posicaoAtual;
 }
 
-void pagaAluguel(Jogador* jogador, Localidade* localidade){
+void pagaAluguel(struct Jogador* jogador, struct Localidade* localidade){
     removeSaldo(jogador, localidade->valorAluguel);
 }
 
-int constroiCasa(Tabuleiro* tabuleiro, Jogador* jogador){
+int constroiCasa(struct Tabuleiro* tabuleiro, struct Jogador* jogador){
     if(jogador->posicaoAtual->elemento.proprietario != jogador){
         if(!verificaMonopolio(tabuleiro, jogador)){
             printf("Impossivel construir, nao ha monopolio");
@@ -74,10 +70,12 @@ int constroiCasa(Tabuleiro* tabuleiro, Jogador* jogador){
     return 1;
 }
 
-int verificaMonopolio(Tabuleiro* tabuleiro, Jogador* jogador){
-    char corAlvo[MAX_CARACTERES] = jogador->posicaoAtual->elemento.cor;
+int verificaMonopolio(struct Tabuleiro* tabuleiro, struct Jogador* jogador){
+    char corAlvo[MAX_CARACTERES];
     Celula* posicaoAtual = tabuleiro->primeiro->prox;
     int monopolio = 1;
+
+    strcpy(corAlvo, jogador->posicaoAtual->elemento.cor);
 
     for(int i = 0; i < tabuleiro->tamanho; i++){
         if((strcmp(posicaoAtual->elemento.cor, corAlvo) != 0) && posicaoAtual->elemento.proprietario != jogador){
@@ -88,7 +86,7 @@ int verificaMonopolio(Tabuleiro* tabuleiro, Jogador* jogador){
     return monopolio;
 }
 
-int verificaFalencia(Jogador* jogador){
+int verificaFalencia(struct Jogador* jogador){
 
     /*teremos problemas caso o código rode toda a verificação em todos os casos.
     * outro problema pode se gerar a partir da passagem de parâmetro da função fabs(double)
@@ -101,7 +99,7 @@ int verificaFalencia(Jogador* jogador){
     return 1;
 }
 
-int salvaguarda(Jogador* jogador){
+int salvaguarda(struct Jogador* jogador){
     int i = 0;
 
     while(jogador->dinheiro < 0){//acrescentar melhores controles para o jogador
@@ -115,8 +113,8 @@ int salvaguarda(Jogador* jogador){
     return 0;
 }
 
-void proximaRodada(VetorJogadores* vetorJogadores, int* numRodadas){
-    if(numRodadas > MAX_RODADAS){
+void proximaRodada(struct VetorJogadores* vetorJogadores, int* numRodadas){
+    if(*numRodadas > MAX_RODADAS){
         //finalizaJogo();
     }
     if(vetorJogadores->posicaoAtual == (vetorJogadores->final - 1)){
@@ -130,7 +128,7 @@ void proximaRodada(VetorJogadores* vetorJogadores, int* numRodadas){
 
 }
 
-void imprimeEstadoJogo(Jogo* jogo){
+void imprimeEstadoJogo(struct Jogo* jogo){
     printf("Jogadores:\n");
 
     for(int i = 0; i < jogo->numJogadores; i++){
@@ -155,7 +153,7 @@ void imprimeEstadoJogo(Jogo* jogo){
     }
 }
 
-void finalizaJogo(Jogo* jogo){
+void finalizaJogo(struct Jogo* jogo){
     FILE* arquivoFimDeJogo;
     FILE* arquivoTabuleiroFinal;
 

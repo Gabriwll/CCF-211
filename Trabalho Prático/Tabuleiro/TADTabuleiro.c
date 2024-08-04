@@ -1,10 +1,9 @@
 #include "./TADTabuleiro.h"
-#include "../Localidade/TADLocalidade.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
-void inicializaTabuleiro(Tabuleiro* tabuleiro){
+void inicializaTabuleiro(struct Tabuleiro* tabuleiro){
     tabuleiro->primeiro = (Celula*)malloc(sizeof(Celula));
     tabuleiro->ultimo = tabuleiro->primeiro;
     tabuleiro->primeiro->prox = tabuleiro->primeiro;
@@ -13,7 +12,7 @@ void inicializaTabuleiro(Tabuleiro* tabuleiro){
     tabuleiro->tamanho = 0;
 }
 
-int verificaTamanho(Tabuleiro* tabuleiro){
+int verificaTamanho(struct Tabuleiro* tabuleiro){
     int tamanho = 1;
     Celula* posicaoAtual = tabuleiro->primeiro;
 
@@ -28,7 +27,7 @@ int verificaTamanho(Tabuleiro* tabuleiro){
 
 //É necessário verificar se o número de localidades presentes no arquivo está consistente
 
-void insereLocalidade(Tabuleiro* tabuleiro, FILE* arquivoLocalidade){
+void insereLocalidade(struct Tabuleiro* tabuleiro, FILE* arquivoLocalidade){
     tabuleiro->ultimo->prox = (Celula*)malloc(sizeof(Celula));
     tabuleiro->ultimo = tabuleiro->ultimo->prox;
 
@@ -41,7 +40,9 @@ void insereLocalidade(Tabuleiro* tabuleiro, FILE* arquivoLocalidade){
     */
 }
 
-Localidade avancaCasa(Tabuleiro* tabuleiro, Localidade* localidadeInicial, int quantCasas){
+/*Essa função não faz sentido, eu acho
+
+Localidade avancaCasa(struct Tabuleiro* tabuleiro, struct Localidade* localidadeInicial, int quantCasas){
     Celula* posicaoFinal = tabuleiro->primeiro->prox;
     
     for(int i = 0; i < (localidadeInicial + quantCasas); i++){
@@ -50,8 +51,9 @@ Localidade avancaCasa(Tabuleiro* tabuleiro, Localidade* localidadeInicial, int q
 
     return posicaoFinal->elemento;
 }//talvez seja interessante salvar essa célula retornada pela função em um novo atributo na struct jogador
+*/
 
-void imprimeTabuleiro(Tabuleiro* tabuleiro){
+void imprimeTabuleiro(struct Tabuleiro* tabuleiro){
     Celula* casaAtual = tabuleiro->primeiro->prox;
 
     printf("Inicio");
@@ -63,7 +65,7 @@ void imprimeTabuleiro(Tabuleiro* tabuleiro){
     }while(casaAtual != tabuleiro->primeiro);
 }
 
-void destroiTabuleiro(Tabuleiro* tabuleiro){
+void destroiTabuleiro(struct Tabuleiro* tabuleiro){
     Celula* posicaoAtual = tabuleiro->primeiro->prox;
 
     while(posicaoAtual != tabuleiro->primeiro){
